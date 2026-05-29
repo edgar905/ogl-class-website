@@ -1,0 +1,915 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>One Giant Leap AI — AI for Professionals Workshop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --brand: #2ea3f2;
+      --brand-dark: #1b8fd9;
+      --brand-glow: rgba(46,163,242,0.18);
+      --bg: #05070d;
+      --surface: #0e1018;
+      --surface-2: #141624;
+      --muted: #7a7a99;
+      --text: #e8eaf2;
+      --radius: 16px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Open Sans', system-ui, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    /* ── Star field background ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 15% 20%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 45% 8%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 70% 35%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 25% 60%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 80% 70%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 55% 85%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 90% 15%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 35% 45%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(2px 2px at 5% 80%, rgba(46,163,242,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 62% 52%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 88% 90%, rgba(255,255,255,0.3) 0%, transparent 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body > * { position: relative; z-index: 1; }
+
+    /* ── Typography ── */
+    .font-display { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+    /* ── Nav ── */
+    .nav-glass {
+      background: rgba(5,7,13,0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(46,163,242,0.12);
+    }
+
+    /* ── Cards ── */
+    .card {
+      background: linear-gradient(145deg, rgba(20,22,36,0.8), rgba(14,16,24,0.6));
+      border: 1px solid rgba(46,163,242,0.1);
+      border-radius: var(--radius);
+    }
+    .card-glow {
+      box-shadow: 0 8px 32px rgba(46,163,242,0.08), 0 2px 8px rgba(0,0,0,0.4);
+    }
+    .card-featured {
+      border-color: rgba(46,163,242,0.5);
+      box-shadow: 0 0 40px rgba(46,163,242,0.12), 0 8px 32px rgba(0,0,0,0.5);
+    }
+
+    /* ── Buttons ── */
+    .btn-primary {
+      background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%);
+      color: #fff;
+      font-weight: 700;
+      border-radius: 12px;
+      padding: 0.7rem 1.5rem;
+      display: inline-block;
+      text-decoration: none;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+      box-shadow: 0 4px 20px rgba(46,163,242,0.3);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(46,163,242,0.45); }
+    .btn-primary:active { transform: translateY(0); }
+
+    .btn-ghost {
+      border: 1px solid rgba(46,163,242,0.3);
+      color: var(--brand);
+      font-weight: 600;
+      border-radius: 12px;
+      padding: 0.7rem 1.5rem;
+      display: inline-block;
+      text-decoration: none;
+      transition: background 0.18s, border-color 0.18s, transform 0.18s;
+    }
+    .btn-ghost:hover { background: rgba(46,163,242,0.08); border-color: var(--brand); transform: translateY(-1px); }
+
+    /* ── Mission stop dots ── */
+    .orbit-line {
+      position: relative;
+    }
+    .orbit-line::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, rgba(46,163,242,0.4), transparent);
+      transform: translateX(-50%);
+    }
+
+    /* ── Hero image placeholder ── */
+    .hero-img {
+      background: linear-gradient(135deg, #05070d 0%, #0e1828 40%, #061020 70%, #05070d 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-img::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 70% 40%, rgba(46,163,242,0.15) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 30% 60%, rgba(15,40,80,0.5) 0%, transparent 70%);
+    }
+    .hero-img-inner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── Subject/about image placeholder ── */
+    .about-img {
+      background: linear-gradient(160deg, #0a0f1e 0%, #0e1c30 50%, #061828 100%);
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius);
+    }
+    .about-img::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(46,163,242,0.1) 0%, transparent 70%);
+    }
+
+    /* ── Countdown ── */
+    .countdown-unit {
+      background: rgba(46,163,242,0.07);
+      border: 1px solid rgba(46,163,242,0.15);
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      min-width: 62px;
+      text-align: center;
+    }
+
+    /* ── Star rating ── */
+    .stars { color: #f59e0b; letter-spacing: 1px; }
+
+    /* ── Week badge ── */
+    .week-badge {
+      background: linear-gradient(135deg, rgba(46,163,242,0.15), rgba(46,163,242,0.05));
+      border: 1px solid rgba(46,163,242,0.25);
+      color: var(--brand);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.65rem;
+      border-radius: 100px;
+      display: inline-block;
+    }
+
+    /* ── Section label ── */
+    .eyebrow {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--brand);
+    }
+
+    /* ── Noise grain texture overlay ── */
+    .grain::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      opacity: 0.5;
+      border-radius: inherit;
+    }
+
+    /* ── Journey stops connector ── */
+    .journey-connector {
+      width: 2px;
+      height: 40px;
+      background: linear-gradient(to bottom, rgba(46,163,242,0.5), rgba(46,163,242,0.1));
+      margin: 0 auto;
+    }
+
+/* ── Pricing badge ── */
+    .price-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.75rem;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: rgba(46,163,242,0.3); border-radius: 3px; }
+
+    /* ── Animations ── */
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+    .float { animation: float 6s ease-in-out infinite; }
+    .pulse-glow { animation: pulseGlow 2.5s ease-in-out infinite; }
+
+  </style>
+</head>
+<body class="antialiased" style="padding-bottom:72px;">
+
+  <!-- ══════════════════════════════════ NAV ══════════════════════════════════ -->
+  <nav class="nav-glass sticky top-0 z-50 w-full">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between gap-6">
+      <a href="index.html" class="flex items-center gap-3" style="text-decoration:none;">
+        <img src="../OGL - O Monogram White.png" alt="One Giant Leap AI" style="height:36px; width:36px; border-radius:6px; object-fit:contain;" />
+        <span class="font-display font-black text-white text-lg hidden sm:inline" style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:800;">One Giant Leap <span style="color:var(--brand)">AI</span></span>
+      </a>
+
+      <div class="hidden md:flex items-center gap-7 text-sm font-semibold" style="color:var(--muted)">
+        <a href="curriculum.html" class="hover:text-white transition-colors duration-150">Curriculum</a>
+        <a href="curriculum.html#pricing" class="hover:text-white transition-colors duration-150">Pricing</a>
+        <a href="curriculum.html#faq" class="hover:text-white transition-colors duration-150">FAQ</a>
+      </div>
+
+    </div>
+  </nav>
+
+
+  <!-- ══════════════════════════════════ HERO ══════════════════════════════════ -->
+  <section class="relative overflow-hidden min-h-screen flex items-center" style="padding: 6rem 0 4rem;">
+
+    <!-- Particle network background -->
+    <canvas id="particle-canvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
+
+    <!-- Ambient background gradients -->
+    <div class="absolute inset-0 pointer-events-none" style="z-index:1;">
+      <div style="position:absolute; top:-10%; left:-5%; width:55%; height:70%; background:radial-gradient(ellipse, rgba(46,163,242,0.07) 0%, transparent 70%);"></div>
+      <div style="position:absolute; bottom:0; right:-10%; width:50%; height:60%; background:radial-gradient(ellipse, rgba(10,30,80,0.3) 0%, transparent 70%);"></div>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-6 w-full" style="position:relative; z-index:2;">
+      <div class="max-w-2xl">
+
+        <!-- Left: copy + countdown -->
+        <div>
+          <p class="eyebrow mb-4">AI for Professionals · Monthly Cohort</p>
+          <h1 class="font-display text-4xl lg:text-6xl font-black leading-tight text-white mb-6" style="font-family:'Plus Jakarta Sans',sans-serif;">
+            AI Basics &amp;<br/>
+            <span style="color:var(--brand)">Claude Code</span>
+          </h1>
+          <p class="text-lg mb-8" style="color:var(--muted); line-height:1.75;">
+            Four live sessions that take you from AI fundamentals to shipping real workflows with Claude. Built for professionals who want hands-on skills — not slide decks.
+          </p>
+
+          <div class="flex flex-wrap gap-4 mb-10">
+            <a href="curriculum.html#pricing" class="btn-primary text-sm">Choose Your Plan</a>
+            <a href="curriculum.html" class="btn-ghost text-sm">See the Curriculum</a>
+          </div>
+
+        </div>
+
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════ HOURGLASS COUNTDOWN ════════════════════════════ -->
+  <section id="countdown-section" style="padding:3rem 0 5rem;">
+    <div class="max-w-6xl mx-auto px-6 flex flex-col items-center text-center">
+
+      <p class="eyebrow mb-6">Next Class Opens In</p>
+
+      <!-- Card wrapper -->
+      <div class="card card-glow relative overflow-hidden" style="padding:3rem 2.5rem 2.5rem; max-width:520px; width:100%;">
+        <!-- Subtle corner glows -->
+        <div style="position:absolute;top:-40px;left:-40px;width:150px;height:150px;background:radial-gradient(ellipse,rgba(46,163,242,0.09),transparent 70%);pointer-events:none;"></div>
+        <div style="position:absolute;bottom:-40px;right:-40px;width:150px;height:150px;background:radial-gradient(ellipse,rgba(46,163,242,0.07),transparent 70%);pointer-events:none;"></div>
+
+
+        <!-- Countdown digits -->
+        <div class="flex items-center justify-center gap-2 mb-4" aria-live="polite">
+          <div class="countdown-unit" style="min-width:70px;">
+            <div id="cd-days" class="font-display text-3xl font-black text-white" style="font-family:'Plus Jakarta Sans',sans-serif;">--</div>
+            <div class="text-xs mt-1" style="color:var(--muted)">Days</div>
+          </div>
+          <span class="font-display text-2xl font-black" style="color:rgba(46,163,242,0.5); margin-bottom:14px; font-family:'Plus Jakarta Sans',sans-serif;">:</span>
+          <div class="countdown-unit" style="min-width:70px;">
+            <div id="cd-hours" class="font-display text-3xl font-black text-white" style="font-family:'Plus Jakarta Sans',sans-serif;">--</div>
+            <div class="text-xs mt-1" style="color:var(--muted)">Hours</div>
+          </div>
+          <span class="font-display text-2xl font-black" style="color:rgba(46,163,242,0.5); margin-bottom:14px; font-family:'Plus Jakarta Sans',sans-serif;">:</span>
+          <div class="countdown-unit" style="min-width:70px;">
+            <div id="cd-mins" class="font-display text-3xl font-black text-white" style="font-family:'Plus Jakarta Sans',sans-serif;">--</div>
+            <div class="text-xs mt-1" style="color:var(--muted)">Mins</div>
+          </div>
+          <span class="font-display text-2xl font-black" style="color:rgba(46,163,242,0.5); margin-bottom:14px; font-family:'Plus Jakarta Sans',sans-serif;">:</span>
+          <div class="countdown-unit" style="min-width:70px;">
+            <div id="cd-secs" class="font-display text-3xl font-black text-white" style="font-family:'Plus Jakarta Sans',sans-serif;">--</div>
+            <div class="text-xs mt-1" style="color:var(--muted)">Secs</div>
+          </div>
+        </div>
+
+        <p id="cd-label" class="text-sm" style="color:var(--muted)">Loading next class date…</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════ MISSION STOPS ════════════════════════════════ -->
+  <section id="journey" style="padding:8rem 0 4rem;">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-14">
+        <p class="eyebrow mb-3">The Mission</p>
+        <h2 class="font-display text-3xl lg:text-4xl font-black text-white" style="font-family:'Plus Jakarta Sans',sans-serif;">
+          Four stops. One giant leap.
+        </h2>
+        <p class="mt-4 max-w-lg mx-auto text-base" style="color:var(--muted);">
+          Each week is a mission stop on your AI journey. We guide you through the essentials and you leave with something real.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+
+        <!-- Week 1 -->
+        <div class="card card-glow p-6 relative overflow-hidden group hover:border-[rgba(46,163,242,0.3)] transition-colors duration-300">
+          <div class="absolute top-0 right-0 w-24 h-24 rounded-bl-full" style="background:radial-gradient(ellipse at top right, rgba(46,163,242,0.08), transparent 70%);"></div>
+          <span class="week-badge mb-4 block">Week 01</span>
+          <div class="text-3xl mb-3">🚀</div>
+          <h3 class="font-display font-bold text-white text-lg mb-2" style="font-family:'Plus Jakarta Sans',sans-serif;">AI Fundamentals</h3>
+          <p class="text-sm leading-relaxed" style="color:var(--muted);">The launchpad. Learn how AI and large language models actually work, what Claude does well, and how professionals are using these tools today.</p>
+          <div class="mt-4 pt-4 border-t border-[rgba(255,255,255,0.05)] flex items-center gap-2">
+            <div style="width:6px; height:6px; background:var(--brand); border-radius:50%;"></div>
+            <span class="text-xs font-semibold" style="color:var(--brand);">Launch Pad</span>
+          </div>
+        </div>
+
+        <!-- Week 2 -->
+        <div class="card card-glow p-6 relative overflow-hidden group hover:border-[rgba(46,163,242,0.3)] transition-colors duration-300">
+          <div class="absolute top-0 right-0 w-24 h-24 rounded-bl-full" style="background:radial-gradient(ellipse at top right, rgba(46,163,242,0.08), transparent 70%);"></div>
+          <span class="week-badge mb-4 block">Week 02</span>
+          <div class="text-3xl mb-3">⚡</div>
+          <h3 class="font-display font-bold text-white text-lg mb-2" style="font-family:'Plus Jakarta Sans',sans-serif;">Claude + Code Basics</h3>
+          <p class="text-sm leading-relaxed" style="color:var(--muted);">First orbit. Pair with Claude Code, learn file structure, and write your first real workflow. You bring the problem — Claude helps build it.</p>
+          <div class="mt-4 pt-4 border-t border-[rgba(255,255,255,0.05)] flex items-center gap-2">
+            <div style="width:6px; height:6px; background:var(--brand); border-radius:50%;"></div>
+            <span class="text-xs font-semibold" style="color:var(--brand);">First Orbit</span>
+          </div>
+        </div>
+
+        <!-- Week 3 -->
+        <div class="card card-glow p-6 relative overflow-hidden group hover:border-[rgba(46,163,242,0.3)] transition-colors duration-300">
+          <div class="absolute top-0 right-0 w-24 h-24 rounded-bl-full" style="background:radial-gradient(ellipse at top right, rgba(46,163,242,0.08), transparent 70%);"></div>
+          <span class="week-badge mb-4 block">Week 03</span>
+          <div class="text-3xl mb-3">🛰️</div>
+          <h3 class="font-display font-bold text-white text-lg mb-2" style="font-family:'Plus Jakarta Sans',sans-serif;">GitHub, Skills &amp; Projects</h3>
+          <p class="text-sm leading-relaxed" style="color:var(--muted);">Deep space. Pull skills, create projects, and connect to the broader ecosystem. We cover GitHub basics so your work travels with you.</p>
+          <div class="mt-4 pt-4 border-t border-[rgba(255,255,255,0.05)] flex items-center gap-2">
+            <div style="width:6px; height:6px; background:var(--brand); border-radius:50%;"></div>
+            <span class="text-xs font-semibold" style="color:var(--brand);">Deep Space</span>
+          </div>
+        </div>
+
+        <!-- Week 4 -->
+        <div class="card card-glow p-6 relative overflow-hidden group hover:border-[rgba(46,163,242,0.3)] transition-colors duration-300">
+          <div class="absolute top-0 right-0 w-24 h-24 rounded-bl-full" style="background:radial-gradient(ellipse at top right, rgba(46,163,242,0.08), transparent 70%);"></div>
+          <span class="week-badge mb-4 block">Week 04</span>
+          <div class="text-3xl mb-3">🌍</div>
+          <h3 class="font-display font-bold text-white text-lg mb-2" style="font-family:'Plus Jakarta Sans',sans-serif;">Build, Test &amp; Ship</h3>
+          <p class="text-sm leading-relaxed" style="color:var(--muted);">Landing. Build a complete project, test it, troubleshoot it, and learn the habits that separate reliable automation from one-off experiments.</p>
+          <div class="mt-4 pt-4 border-t border-[rgba(255,255,255,0.05)] flex items-center gap-2">
+            <div style="width:6px; height:6px; background:var(--brand); border-radius:50%;"></div>
+            <span class="text-xs font-semibold" style="color:var(--brand);">The Landing</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="mt-8 text-center">
+        <a href="curriculum.html" class="btn-ghost text-sm">View full curriculum details →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════ ABOUT TEASER ════════════════════════════════ -->
+  <section style="padding:5rem 0;">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+
+        <!-- Left: image -->
+        <div class="about-img relative" style="aspect-ratio:4/5; max-height:480px; overflow:hidden;">
+          <!-- Inline SVG for subject image placeholder -->
+          <svg width="100%" height="100%" viewBox="0 0 400 500" fill="none" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;">
+            <!-- Background -->
+            <rect width="400" height="500" fill="url(#aboutBg)"/>
+            <!-- Grid lines -->
+            <line x1="0" y1="100" x2="400" y2="100" stroke="rgba(46,163,242,0.04)" stroke-width="1"/>
+            <line x1="0" y1="200" x2="400" y2="200" stroke="rgba(46,163,242,0.04)" stroke-width="1"/>
+            <line x1="0" y1="300" x2="400" y2="300" stroke="rgba(46,163,242,0.04)" stroke-width="1"/>
+            <line x1="0" y1="400" x2="400" y2="400" stroke="rgba(46,163,242,0.04)" stroke-width="1"/>
+            <line x1="100" y1="0" x2="100" y2="500" stroke="rgba(46,163,242,0.04)" stroke-width="1"/>
+            <line x1="200" y1="0" x2="200" y2="500" stroke="rgba(46,163,242,0.04)" stroke-width="1"/>
+            <line x1="300" y1="0" x2="300" y2="500" stroke="rgba(46,163,242,0.04)" stroke-width="1"/>
+            <!-- Central glow circle -->
+            <circle cx="200" cy="230" r="120" fill="url(#abGlow)"/>
+            <!-- Abstract orbit rings -->
+            <ellipse cx="200" cy="230" rx="140" ry="70" stroke="rgba(46,163,242,0.12)" stroke-width="1.5" fill="none" stroke-dasharray="8 5"/>
+            <ellipse cx="200" cy="230" rx="100" ry="50" stroke="rgba(46,163,242,0.15)" stroke-width="1" fill="none"/>
+            <!-- Constellation of dots -->
+            <circle cx="200" cy="230" r="16" fill="url(#centerDot)"/>
+            <circle cx="200" cy="230" r="6" fill="white" opacity="0.9"/>
+            <circle cx="115" cy="200" r="5" fill="var(--brand)" opacity="0.7"/>
+            <circle cx="285" cy="200" r="5" fill="var(--brand)" opacity="0.7"/>
+            <circle cx="160" cy="290" r="4" fill="rgba(46,163,242,0.6)"/>
+            <circle cx="240" cy="290" r="4" fill="rgba(46,163,242,0.6)"/>
+            <!-- Connect lines -->
+            <line x1="200" y1="230" x2="115" y2="200" stroke="rgba(46,163,242,0.2)" stroke-width="1"/>
+            <line x1="200" y1="230" x2="285" y2="200" stroke="rgba(46,163,242,0.2)" stroke-width="1"/>
+            <line x1="200" y1="230" x2="160" y2="290" stroke="rgba(46,163,242,0.2)" stroke-width="1"/>
+            <line x1="200" y1="230" x2="240" y2="290" stroke="rgba(46,163,242,0.2)" stroke-width="1"/>
+            <!-- Bottom label area -->
+            <rect x="40" y="420" width="320" height="50" rx="10" fill="rgba(14,16,24,0.85)"/>
+            <text x="200" y="441" text-anchor="middle" fill="rgba(46,163,242,0.8)" font-size="9" font-family="Plus Jakarta Sans, sans-serif" font-weight="700" letter-spacing="2">ONE GIANT LEAP AI</text>
+            <text x="200" y="460" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="11" font-family="Open Sans, sans-serif">Your guide through the AI space</text>
+            <defs>
+              <linearGradient id="aboutBg" x1="0" y1="0" x2="400" y2="500" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#0a0f1e"/>
+                <stop offset="100%" stop-color="#061828"/>
+              </linearGradient>
+              <radialGradient id="abGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="rgba(46,163,242,0.12)"/>
+                <stop offset="100%" stop-color="transparent"/>
+              </radialGradient>
+              <radialGradient id="centerDot" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="rgba(46,163,242,0.4)"/>
+                <stop offset="100%" stop-color="rgba(46,163,242,0.05)"/>
+              </radialGradient>
+            </defs>
+          </svg>
+        </div>
+
+        <!-- Right: copy -->
+        <div>
+          <p class="eyebrow mb-4">About One Giant Leap AI</p>
+          <h2 class="font-display text-3xl lg:text-4xl font-black text-white mb-6" style="font-family:'Plus Jakarta Sans',sans-serif; line-height:1.2;">
+            We're your guide through the AI space.
+          </h2>
+          <p class="text-base mb-5 leading-relaxed" style="color:var(--muted);">
+            One Giant Leap AI exists to make the AI transition tangible for working professionals. Not theory — working tools you can deploy in your role this week. We've trained hundreds of professionals across industries and built the curriculum around what actually sticks.
+          </p>
+          <p class="text-base mb-5 leading-relaxed" style="color:var(--muted);">
+            This isn't a general AI overview. Every week builds on the last: you go from understanding how models think, to co-working with Claude, to building and shipping real automation. You leave with a project, not just a certificate.
+          </p>
+          <p class="text-base mb-8 leading-relaxed" style="color:var(--muted);">
+            Classes run monthly, every first Wednesday, so you can join when the timing is right for you.
+          </p>
+          <a href="curriculum.html" class="btn-ghost text-sm">See how the class is structured →</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════ SOCIAL PROOF ════════════════════════════════ -->
+  <section style="padding:5rem 0; background:linear-gradient(180deg, transparent 0%, rgba(14,16,24,0.4) 50%, transparent 100%);">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-12">
+        <p class="eyebrow mb-3">What Professionals Say</p>
+        <h2 class="font-display text-3xl font-black text-white" style="font-family:'Plus Jakarta Sans',sans-serif;">
+          Real results from real students.
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+
+        <div class="card card-glow p-6">
+          <div class="stars text-lg mb-4">★★★★★</div>
+          <p class="text-sm leading-relaxed mb-6" style="color:var(--muted);">"I've taken a dozen AI courses. This is the first one where I actually shipped something real before the class ended. Week 3 alone was worth the price."</p>
+          <div class="flex items-center gap-3">
+            <div style="width:38px; height:38px; border-radius:50%; background:linear-gradient(135deg, #1a3a6e, #2ea3f2); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; color:white; font-family:'Plus Jakarta Sans',sans-serif;">MR</div>
+            <div>
+              <div class="text-sm font-semibold text-white">Marcus R.</div>
+              <div class="text-xs" style="color:var(--muted)">Operations Director</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card-glow card-featured p-6">
+          <div class="stars text-lg mb-4">★★★★★</div>
+          <p class="text-sm leading-relaxed mb-6" style="color:var(--muted);">"The space-journey structure sounds gimmicky until you're in it. By week four I had a full Claude workflow running in my team's stack. Clear, practical, no fluff."</p>
+          <div class="flex items-center gap-3">
+            <div style="width:38px; height:38px; border-radius:50%; background:linear-gradient(135deg, #1b3d6a, #3ab0ff); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; color:white; font-family:'Plus Jakarta Sans',sans-serif;">JS</div>
+            <div>
+              <div class="text-sm font-semibold text-white">Jennifer S.</div>
+              <div class="text-xs" style="color:var(--muted)">Marketing Manager</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card-glow p-6">
+          <div class="stars text-lg mb-4">★★★★★</div>
+          <p class="text-sm leading-relaxed mb-6" style="color:var(--muted);">"Signed up skeptical — I thought I'd be too technical or not technical enough. The Executive tier with the consulting session made this exactly right for where I am."</p>
+          <div class="flex items-center gap-3">
+            <div style="width:38px; height:38px; border-radius:50%; background:linear-gradient(135deg, #1a3050, #2ea3f2); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; color:white; font-family:'Plus Jakarta Sans',sans-serif;">DT</div>
+            <div>
+              <div class="text-sm font-semibold text-white">Dana T.</div>
+              <div class="text-xs" style="color:var(--muted)">VP of Product</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════ PRICING ════════════════════════════════ -->
+  <section id="pricing" style="padding:6rem 0;">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-14">
+        <p class="eyebrow mb-3">Pricing</p>
+        <h2 class="font-display text-3xl lg:text-4xl font-black text-white" style="font-family:'Plus Jakarta Sans',sans-serif;">
+          Choose your mission tier.
+        </h2>
+        <p class="mt-4 max-w-lg mx-auto text-sm" style="color:var(--muted);">Every tier includes all four live sessions and the replay library. Pick the level of support that fits where you are.</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5 items-start">
+
+        <!-- Tier 1: Student -->
+        <div class="card card-glow p-6 flex flex-col transition-all duration-300 hover:border-[rgba(46,163,242,0.35)] hover:shadow-[0_12px_40px_rgba(46,163,242,0.14)]">
+          <div class="mb-5">
+            <span class="eyebrow block mb-2">Tier 1</span>
+            <h3 class="font-display font-black text-white text-xl mb-1" style="font-family:'Plus Jakarta Sans',sans-serif;">Student</h3>
+            <p class="text-xs" style="color:var(--muted);">Everything you need to get started.</p>
+          </div>
+          <div class="mb-6">
+            <span class="font-display text-4xl font-black text-white" style="font-family:'Plus Jakarta Sans',sans-serif;">$100</span>
+            <span class="text-sm ml-1" style="color:var(--muted)">per seat</span>
+          </div>
+          <ul class="space-y-3 mb-8 flex-1">
+            <li class="flex items-start gap-2 text-sm" style="color:var(--muted)">
+              <svg class="mt-0.5 shrink-0" width="14" height="14" fill="none"><circle cx="7" cy="7" r="6.5" stroke="var(--brand)" stroke-width="1"/><path d="M4.5 7l2 2L9.5 5" stroke="var(--brand)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              4 live sessions (90 min each)
+            </li>
+            <li class="flex items-start gap-2 text-sm" style="color:var(--muted)">
+              <svg class="mt-0.5 shrink-0" width="14" height="14" fill="none"><circle cx="7" cy="7" r="6.5" stroke="var(--brand)" stroke-width="1"/><path d="M4.5 7l2 2L9.5 5" stroke="var(--brand)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Full replay library access
+            </li>
+            <li class="flex items-start gap-2 text-sm" style="color:var(--muted)">
+              <svg class="mt-0.5 shrink-0" width="14" height="14" fill="none"><circle cx="7" cy="7" r="6.5" stroke="var(--brand)" stroke-width="1"/><path d="M4.5 7l2 2L9.5 5" stroke="var(--brand)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Session workbooks (all 4 weeks)
+            </li>
+          </ul>
+          <a href="mailto:info@onegiantleap.ai?subject=Enroll%3A%20Student%20Tier%20%24100" class="btn-ghost text-sm text-center w-full">Enroll — $100</a>
+        </div>
+
+        <!-- Tier 2: Professional — FEATURED -->
+        <div class="card card-featured p-6 flex flex-col relative transition-all duration-300 hover:shadow-[0_16px_50px_rgba(46,163,242,0.28)]" style="margin-top:-8px;">
+          <div class="price-badge">Most Popular</div>
+          <div class="mb-5">
+            <span class="eyebrow block mb-2">Tier 2</span>
+            <h3 class="font-display font-black text-white text-xl mb-1" style="font-family:'Plus Jakarta Sans',sans-serif;">Professional</h3>
+            <p class="text-xs" style="color:var(--muted);">Everything in Student, plus one-on-one time.</p>
+          </div>
+          <div class="mb-6">
+            <span class="font-display text-4xl font-black text-white" style="font-family:'Plus Jakarta Sans',sans-serif;">$250</span>
+            <span class="text-sm ml-1" style="color:var(--muted)">per seat</span>
+          </div>
+          <ul class="space-y-3 mb-8 flex-1">
+            <li class="flex items-start gap-2 text-sm" style="color:var(--muted)">
+              <svg class="mt-0.5 shrink-0" width="14" height="14" fill="none"><circle cx="7" cy="7" r="6.5" stroke="var(--brand)" stroke-width="1"/><path d="M4.5 7l2 2L9.5 5" stroke="var(--brand)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Everything in Student tier
+            </li>
+            <li class="flex items-start gap-2 text-sm" style="color:var(--muted)">
+              <svg class="mt-0.5 shrink-0" width="14" height="14" fill="none"><circle cx="7" cy="7" r="6.5" stroke="var(--brand)" stroke-width="1"/><path d="M4.5 7l2 2L9.5 5" stroke="var(--brand)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <strong class="text-white">1-on-1 office hours</strong> (30 min, 1 session)
+            </li>
+            <li class="flex items-start gap-2 text-sm" style="color:var(--muted)">
+              <svg class="mt-0.5 shrink-0" width="14" height="14" fill="none"><circle cx="7" cy="7" r="6.5" stroke="var(--brand)" stroke-width="1"/><path d="M4.5 7l2 2L9.5 5" stroke="var(--brand)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Direct instructor access via email
+            </li>
+          </ul>
+          <a href="mailto:info@onegiantleap.ai?subject=Enroll%3A%20Professional%20Tier%20%24250" class="btn-primary text-sm text-center w-full">Enroll — $250</a>
+        </div>
+
+        <!-- Tier 3: Executive -->
+        <div class="card card-glow p-6 flex flex-col transition-all duration-300 hover:border-[rgba(46,163,242,0.35)] hover:shadow-[0_12px_40px_rgba(46,163,242,0.14)]">
+          <div class="mb-5">
+            <span class="eyebrow block mb-2">Tier 3</span>
+            <h3 class="font-display font-black text-white text-xl mb-1" style="font-family:'Plus Jakarta Sans',sans-serif;">Executive</h3>
+            <p class="text-xs" style="color:var(--muted);">Everything in Professional, plus consulting.</p>
+          </div>
+          <div class="mb-6">
+            <span class="font-display text-4xl font-black text-white" style="font-family:'Plus Jakarta Sans',sans-serif;">$500</span>
+            <span class="text-sm ml-1" style="color:var(--muted)">per seat</span>
+          </div>
+          <ul class="space-y-3 mb-8 flex-1">
+            <li class="flex items-start gap-2 text-sm" style="color:var(--muted)">
+              <svg class="mt-0.5 shrink-0" width="14" height="14" fill="none"><circle cx="7" cy="7" r="6.5" stroke="var(--brand)" stroke-width="1"/><path d="M4.5 7l2 2L9.5 5" stroke="var(--brand)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Everything in Professional tier
+            </li>
+            <li class="flex items-start gap-2 text-sm" style="color:var(--muted)">
+              <svg class="mt-0.5 shrink-0" width="14" height="14" fill="none"><circle cx="7" cy="7" r="6.5" stroke="var(--brand)" stroke-width="1"/><path d="M4.5 7l2 2L9.5 5" stroke="var(--brand)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <strong class="text-white">2 consulting sessions</strong> (60 min each)
+            </li>
+            <li class="flex items-start gap-2 text-sm" style="color:var(--muted)">
+              <svg class="mt-0.5 shrink-0" width="14" height="14" fill="none"><circle cx="7" cy="7" r="6.5" stroke="var(--brand)" stroke-width="1"/><path d="M4.5 7l2 2L9.5 5" stroke="var(--brand)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Custom workflow review
+            </li>
+            <li class="flex items-start gap-2 text-sm" style="color:var(--muted)">
+              <svg class="mt-0.5 shrink-0" width="14" height="14" fill="none"><circle cx="7" cy="7" r="6.5" stroke="var(--brand)" stroke-width="1"/><path d="M4.5 7l2 2L9.5 5" stroke="var(--brand)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Priority support throughout the cohort
+            </li>
+          </ul>
+          <a href="mailto:info@onegiantleap.ai?subject=Enroll%3A%20Executive%20Tier%20%24500" class="btn-ghost text-sm text-center w-full">Enroll — $500</a>
+        </div>
+
+        <!-- Tier 4: Enterprise -->
+        <div class="card card-glow p-6 flex flex-col transition-all duration-300 hover:border-[rgba(46,163,242,0.35)] hover:shadow-[0_12px_40px_rgba(46,163,242,0.14)]" style="background:linear-gradient(145deg, rgba(14,22,40,0.85), rgba(10,16,32,0.7));">
+          <div class="mb-5">
+            <span class="eyebrow block mb-2">Tier 4</span>
+            <h3 class="font-display font-black text-white text-xl mb-1" style="font-family:'Plus Jakarta Sans',sans-serif;">Enterprise</h3>
+            <p class="text-xs" style="color:var(--muted);">Custom training for your whole team.</p>
+          </div>
+          <div class="mb-6">
+            <span class="font-display text-3xl font-black text-white" style="font-family:'Plus Jakarta Sans',sans-serif;">Custom</span>
+            <div class="text-xs mt-2" style="color:var(--brand); font-weight:700;">Contact for pricing</div>
+            <div class="text-xs mt-0.5" style="color:var(--muted)">Tailored to team size &amp; scope</div>
+          </div>
+          <ul class="space-y-3 mb-8 flex-1">
+            <li class="flex items-start gap-2 text-sm" style="color:var(--muted)">
+              <svg class="mt-0.5 shrink-0" width="14" height="14" fill="none"><circle cx="7" cy="7" r="6.5" stroke="var(--brand)" stroke-width="1"/><path d="M4.5 7l2 2L9.5 5" stroke="var(--brand)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Private workshop for your team
+            </li>
+            <li class="flex items-start gap-2 text-sm" style="color:var(--muted)">
+              <svg class="mt-0.5 shrink-0" width="14" height="14" fill="none"><circle cx="7" cy="7" r="6.5" stroke="var(--brand)" stroke-width="1"/><path d="M4.5 7l2 2L9.5 5" stroke="var(--brand)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Training in Claude, ChatGPT, &amp; Copilot
+            </li>
+            <li class="flex items-start gap-2 text-sm" style="color:var(--muted)">
+              <svg class="mt-0.5 shrink-0" width="14" height="14" fill="none"><circle cx="7" cy="7" r="6.5" stroke="var(--brand)" stroke-width="1"/><path d="M4.5 7l2 2L9.5 5" stroke="var(--brand)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Tailored to your team's tech stack
+            </li>
+            <li class="flex items-start gap-2 text-sm" style="color:var(--muted)">
+              <svg class="mt-0.5 shrink-0" width="14" height="14" fill="none"><circle cx="7" cy="7" r="6.5" stroke="var(--brand)" stroke-width="1"/><path d="M4.5 7l2 2L9.5 5" stroke="var(--brand)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Flexible scheduling
+            </li>
+          </ul>
+          <a href="mailto:info@onegiantleap.ai?subject=Enterprise%20Workshop%20Inquiry" class="btn-ghost text-sm text-center w-full">Contact Us</a>
+        </div>
+
+      </div>
+
+      <p class="text-center mt-8 text-sm" style="color:var(--muted)">Questions about which tier is right for you? <a href="mailto:info@onegiantleap.ai" class="hover:text-white transition-colors" style="color:var(--brand)">Email us</a> — we'll help you decide.</p>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════ CTA BANNER ════════════════════════════════ -->
+  <section style="padding:5rem 0;">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="relative overflow-hidden rounded-2xl" style="background:linear-gradient(135deg, #0c1828 0%, #0a1520 50%, #061020 100%); border:1px solid rgba(46,163,242,0.2); padding:4rem 3rem;">
+        <!-- Background glow -->
+        <div style="position:absolute; top:-50%; left:-10%; width:60%; height:200%; background:radial-gradient(ellipse, rgba(46,163,242,0.08) 0%, transparent 60%); pointer-events:none;"></div>
+        <div style="position:absolute; bottom:-50%; right:-10%; width:50%; height:150%; background:radial-gradient(ellipse, rgba(10,30,80,0.4) 0%, transparent 70%); pointer-events:none;"></div>
+
+        <div class="relative text-center max-w-2xl mx-auto">
+          <p class="eyebrow mb-4">Monthly Cohort · First Wednesday</p>
+          <h2 class="font-display text-3xl lg:text-4xl font-black text-white mb-4" style="font-family:'Plus Jakarta Sans',sans-serif;">
+            Your mission starts next Wednesday.
+          </h2>
+          <p class="text-base mb-8" style="color:var(--muted);">
+            Classes run the first Wednesday of every month. Reserve your seat — spots fill up, and the replay library starts the moment you enroll.
+          </p>
+          <div class="flex flex-wrap gap-4 justify-center">
+            <a href="curriculum.html#pricing" class="btn-primary">View Pricing &amp; Enroll</a>
+            <a href="mailto:info@onegiantleap.ai?subject=AI%20for%20Professionals%20Inquiry" class="btn-ghost">Email Us First</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════ FOOTER ════════════════════════════════ -->
+  <footer style="border-top:1px solid rgba(46,163,242,0.08); padding:3rem 0 2rem;">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid md:grid-cols-3 gap-8 mb-8">
+        <div>
+          <div class="flex items-center gap-3 mb-3">
+            <img src="../OGL - O Monogram White.png" alt="One Giant Leap AI" style="height:32px; width:32px; border-radius:5px; object-fit:contain;" />
+            <span class="font-display font-black text-white text-base" style="font-family:'Plus Jakarta Sans',sans-serif;">One Giant Leap <span style="color:var(--brand)">AI</span></span>
+          </div>
+          <p class="text-sm leading-relaxed" style="color:var(--muted);">Your guide through the AI space. Four weeks. Real skills. Monthly cohorts.</p>
+        </div>
+        <div>
+          <div class="text-xs font-bold mb-4 tracking-wider uppercase" style="color:var(--muted)">Navigate</div>
+          <div class="flex flex-col gap-2 text-sm" style="color:var(--muted)">
+            <a href="index.html" class="hover:text-white transition-colors">Home</a>
+            <a href="curriculum.html" class="hover:text-white transition-colors">Curriculum</a>
+            <a href="curriculum.html#pricing" class="hover:text-white transition-colors">Pricing</a>
+            <a href="curriculum.html#faq" class="hover:text-white transition-colors">FAQ</a>
+          </div>
+        </div>
+        <div>
+          <div class="text-xs font-bold mb-4 tracking-wider uppercase" style="color:var(--muted)">Connect</div>
+          <div class="flex flex-col gap-2 text-sm" style="color:var(--muted)">
+            <a href="mailto:info@onegiantleap.ai" class="hover:text-white transition-colors">info@onegiantleap.ai</a>
+            <a href="https://onegiantleap.ai" class="hover:text-white transition-colors" target="_blank">onegiantleap.ai</a>
+          </div>
+          <!-- Social icons -->
+          <div class="flex gap-3 mt-4">
+            <a href="#" aria-label="LinkedIn" class="hover:opacity-80 transition-opacity" style="width:32px; height:32px; background:rgba(46,163,242,0.1); border:1px solid rgba(46,163,242,0.2); border-radius:8px; display:flex; align-items:center; justify-content:center; color:var(--brand); font-size:13px;">in</a>
+            <a href="#" aria-label="Twitter/X" class="hover:opacity-80 transition-opacity" style="width:32px; height:32px; background:rgba(46,163,242,0.1); border:1px solid rgba(46,163,242,0.2); border-radius:8px; display:flex; align-items:center; justify-content:center; color:var(--brand); font-size:13px;">𝕏</a>
+            <a href="#" aria-label="YouTube" class="hover:opacity-80 transition-opacity" style="width:32px; height:32px; background:rgba(46,163,242,0.1); border:1px solid rgba(46,163,242,0.2); border-radius:8px; display:flex; align-items:center; justify-content:center; color:var(--brand); font-size:13px;">▶</a>
+          </div>
+        </div>
+      </div>
+      <div style="border-top:1px solid rgba(255,255,255,0.05); padding-top:1.5rem;" class="flex flex-col md:flex-row items-center justify-between gap-3">
+        <p class="text-xs" style="color:var(--muted)">© 2026 One Giant Leap AI · All rights reserved</p>
+        <p class="text-xs" style="color:var(--muted)">AI for Professionals: AI Basics &amp; Claude Code</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ════════════════════════════════ BOTTOM ENROLL BAR ════════════════════════════════ -->
+  <div style="position:fixed; bottom:0; left:0; right:0; z-index:50; background:rgba(5,7,13,0.95); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border-top:1px solid rgba(46,163,242,0.18); padding:0.85rem 1.5rem;">
+    <div class="max-w-6xl mx-auto flex items-center justify-between gap-4">
+      <div>
+        <div class="font-display font-black text-white text-sm" style="font-family:'Plus Jakarta Sans',sans-serif;">AI Basics &amp; Claude Code</div>
+        <div class="text-xs" style="color:var(--muted)">Monthly cohort &mdash; first Wednesday of every month</div>
+      </div>
+      <a href="curriculum.html#pricing" class="btn-primary text-sm" style="white-space:nowrap;">Enroll Now</a>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════ 3D PARTICLE SCRIPT ════════════════════════════════ -->
+  <script>
+    (function () {
+      var canvas = document.getElementById('particle-canvas');
+      if (!canvas) return;
+      var ctx = canvas.getContext('2d');
+      var W, H, particles = [];
+
+      function resize() {
+        W = canvas.width  = canvas.offsetWidth;
+        H = canvas.height = canvas.offsetHeight;
+      }
+
+      function rand(min, max) { return Math.random() * (max - min) + min; }
+
+      function mkParticle() {
+        return {
+          x: rand(0, W), y: rand(0, H),
+          vx: rand(-0.15, 0.15), vy: rand(-0.2, -0.05),
+          r: rand(1, 2.2),
+          alpha: rand(0.2, 0.7),
+          color: Math.random() > 0.5 ? '46,163,242' : '255,255,255'
+        };
+      }
+
+      resize();
+      for (var i = 0; i < 55; i++) particles.push(mkParticle());
+
+      // Draw connecting lines between nearby particles
+      function drawLines() {
+        for (var i = 0; i < particles.length; i++) {
+          for (var j = i + 1; j < particles.length; j++) {
+            var dx = particles[i].x - particles[j].x;
+            var dy = particles[i].y - particles[j].y;
+            var dist = Math.sqrt(dx*dx + dy*dy);
+            if (dist < 90) {
+              ctx.beginPath();
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.strokeStyle = 'rgba(46,163,242,' + (0.12 * (1 - dist/90)) + ')';
+              ctx.lineWidth = 0.6;
+              ctx.stroke();
+            }
+          }
+        }
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, W, H);
+        drawLines();
+        particles.forEach(function(p) {
+          p.x += p.vx; p.y += p.vy;
+          if (p.y < -4) { p.y = H + 4; p.x = rand(0, W); }
+          if (p.x < -4) p.x = W + 4;
+          if (p.x > W + 4) p.x = -4;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(' + p.color + ',' + p.alpha + ')';
+          ctx.fill();
+        });
+        requestAnimationFrame(animate);
+      }
+
+      window.addEventListener('resize', resize);
+      animate();
+    })();
+  </script>
+
+  <!-- ════════════════════════════════ COUNTDOWN + HOURGLASS SCRIPT ════════════════════════════════ -->
+  <script>
+    (function () {
+      var EARLIEST = new Date(2026, 5, 3); // June 3, 2026 — program start
+
+      // First Wednesday of a given year/month
+      function firstWed(year, month) {
+        var d = new Date(year, month, 1);
+        var offset = (3 - d.getDay() + 7) % 7;
+        return new Date(year, month, 1 + offset);
+      }
+
+      // Next upcoming first Wednesday (>= now, >= EARLIEST)
+      function getNext() {
+        var now = new Date();
+        var y = now.getFullYear(), m = now.getMonth();
+        var c = firstWed(y, m);
+        if (c <= now) { m++; if (m > 11) { m = 0; y++; } c = firstWed(y, m); }
+        if (c < EARLIEST) c = EARLIEST;
+        return c;
+      }
+
+      // Most recent first Wednesday that already passed (or EARLIEST if nothing yet)
+      function getPrev(nextDate) {
+        var y = nextDate.getFullYear(), m = nextDate.getMonth() - 1;
+        if (m < 0) { m = 11; y--; }
+        var c = firstWed(y, m);
+        if (c < EARLIEST) c = EARLIEST;
+        return c;
+      }
+
+      function pad(n) { return String(n).padStart(2, '0'); }
+      function monthName(d) {
+        return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()];
+      }
+
+
+      // ── Initial setup ────────────────────────────────────
+      var target = getNext();
+      var label  = document.getElementById('cd-label');
+      label.textContent = 'Next class — ' + monthName(target) + ' ' + target.getDate() + ', ' + target.getFullYear();
+
+      // ── Tick ─────────────────────────────────────────────
+      function tick() {
+        var now  = new Date();
+        var diff = target - now;
+
+        if (diff <= 0) {
+          target = getNext();
+          label.textContent = 'Next class — ' + monthName(target) + ' ' + target.getDate() + ', ' + target.getFullYear();
+          diff = target - now;
+        }
+
+        // Countdown digits
+        var s    = Math.floor(diff / 1000);
+        var days = Math.floor(s / 86400);
+        var hrs  = Math.floor((s % 86400) / 3600);
+        var mins = Math.floor((s % 3600) / 60);
+        var secs = s % 60;
+        document.getElementById('cd-days').textContent  = days;
+        document.getElementById('cd-hours').textContent = pad(hrs);
+        document.getElementById('cd-mins').textContent  = pad(mins);
+        document.getElementById('cd-secs').textContent  = pad(secs);
+
+      }
+
+      tick();
+      setInterval(tick, 1000);
+    })();
+  </script>
+
+</body>
+</html>
