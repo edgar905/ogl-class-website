@@ -234,6 +234,29 @@
     ::-webkit-scrollbar-track { background: var(--bg); }
     ::-webkit-scrollbar-thumb { background: rgba(46,163,242,0.3); border-radius: 3px; }
 
+    /* ── Expandable testimonial ── */
+    .testimonial-expand {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+    .testimonial-expand.open {
+      max-height: 600px;
+    }
+    .expand-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 0.75rem;
+      color: var(--brand);
+      display: block;
+      margin-top: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .expand-btn:hover { opacity: 0.75; }
+
     /* ── Section & card hover highlights ── */
     .week-hl {
       border-radius: 20px;
@@ -528,7 +551,15 @@
 
         <div class="card card-glow p-6 transition-all duration-300 hover:border-[rgba(46,163,242,0.3)] hover:shadow-[0_12px_40px_rgba(46,163,242,0.12)]">
           <div class="stars text-lg mb-4">★★★★★</div>
-          <p class="text-sm leading-relaxed mb-6" style="color:var(--muted);">"Lucas takes dense technical material and turns it into plain language without losing the substance — and that's harder than it sounds. By the end I hadn't just learned about AI. I'd built two things. One is already running at work and saving our team nearly 100 hours a quarter. It's not just education. It's actual application."</p>
+          <p class="text-sm leading-relaxed" style="color:var(--muted);">"Lucas takes dense technical material and turns it into plain language without losing the substance — and that's harder than it sounds. By the end I hadn't just learned about AI. I'd built two things. One is already running at work and saving our team nearly 100 hours a quarter. It's not just education. It's actual application."</p>
+          <div class="testimonial-expand">
+            <div style="border-top:1px solid rgba(46,163,242,0.08); margin:0.85rem 0 0.85rem;"></div>
+            <p class="text-sm leading-relaxed mb-3" style="color:var(--muted);">"Lucas is an amazing teacher. He takes something that could easily go over your head and brings it all the way down to earth without losing the substance. And that can be harder than it sounds.</p>
+            <p class="text-sm leading-relaxed mb-3" style="color:var(--muted);">He also actually cares and checks on his students to make sure no one's falling behind, and he makes himself available outside of class when things get confusing — which sometimes they do because the stuff is so new. That kind of support really changed my experience entirely.</p>
+            <p class="text-sm leading-relaxed mb-3" style="color:var(--muted);">The other project I built is a personal one related to social media that I'd been wanting to do for a while. And that's the cool thing about this program — it's not just education. It's actual application. You walk away with a product that works in your actual life.</p>
+            <p class="text-sm leading-relaxed" style="color:var(--muted);">If you're on the fence, just take the class. You'll figure out what you want to build somewhere in the middle of it and you won't regret it."</p>
+          </div>
+          <button class="expand-btn" onclick="var e=this.closest('.card').querySelector('.testimonial-expand');e.classList.toggle('open');this.textContent=e.classList.contains('open')?'Show less ↑':'Read the full review →';">Read the full review →</button>
           <div class="flex items-center gap-3">
             <div style="width:38px; height:38px; border-radius:50%; background:linear-gradient(135deg, #1a3a6e, #2ea3f2); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; color:white; font-family:'Plus Jakarta Sans',sans-serif;">FS</div>
             <div>
