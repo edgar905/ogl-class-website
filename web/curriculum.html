@@ -172,6 +172,22 @@
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: var(--bg); }
     ::-webkit-scrollbar-thumb { background: rgba(46,163,242,0.3); border-radius: 3px; }
+
+    /* ── Section & card hover highlights ── */
+    .week-hl {
+      border-radius: 20px;
+      transition: background 0.3s ease;
+    }
+    .week-hl:hover {
+      background: rgba(46,163,242,0.03);
+    }
+    details.card {
+      transition: border-color 0.22s ease, box-shadow 0.22s ease;
+    }
+    details.card:hover {
+      border-color: rgba(46,163,242,0.22);
+      box-shadow: 0 4px 24px rgba(46,163,242,0.07);
+    }
   </style>
 </head>
 <body class="antialiased" style="padding-bottom:72px;">
@@ -227,11 +243,11 @@
       </div>
 
       <!-- Week 1 -->
-      <div class="grid lg:grid-cols-2 gap-10 items-center mb-20">
+      <div class="grid lg:grid-cols-2 gap-10 items-center mb-20 week-hl">
         <div>
           <span class="week-badge mb-4 block">Week 01 — Launch Pad</span>
           <h2 class="font-display text-2xl lg:text-3xl font-black text-white mb-4" style="font-family:'Plus Jakarta Sans',sans-serif;">
-            🚀 AI Fundamentals
+            AI Fundamentals
           </h2>
           <p class="mb-5 leading-relaxed" style="color:var(--muted);">Before you can fly, you need to understand the machine. Week 1 covers how large language models actually work — not the hype, the mechanics. You'll leave with a clear mental model of what Claude (and AI in general) can and can't do, and a set of prompting fundamentals that will accelerate everything else.</p>
           <div class="space-y-3 mb-6">
@@ -261,7 +277,7 @@
             </div>
           </div>
           <div class="card p-4 inline-flex items-center gap-3">
-            <span style="color:var(--brand); font-size:1.2rem;">⏱</span>
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" style="flex-shrink:0;"><circle cx="12" cy="12" r="9.5" stroke="var(--brand)" stroke-width="1.5"/><path d="M12 7v5l3 3" stroke="var(--brand)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <span class="text-sm" style="color:var(--muted)">90-minute live session + workbook + replay</span>
           </div>
         </div>
@@ -315,7 +331,7 @@
       </div>
 
       <!-- Week 2 -->
-      <div class="grid lg:grid-cols-2 gap-10 items-center mb-20">
+      <div class="grid lg:grid-cols-2 gap-10 items-center mb-20 week-hl">
 
         <!-- W2 Visual (left) -->
         <div class="relative order-2 lg:order-1">
@@ -364,7 +380,7 @@
         <div class="order-1 lg:order-2">
           <span class="week-badge mb-4 block">Week 02 — First Orbit</span>
           <h2 class="font-display text-2xl lg:text-3xl font-black text-white mb-4" style="font-family:'Plus Jakarta Sans',sans-serif;">
-            ⚡ Claude Co-Work &amp; Code
+            Claude Co-Work &amp; Code
           </h2>
           <p class="mb-5 leading-relaxed" style="color:var(--muted);">You're in orbit. This week you pair with Claude Code for the first time — opening a terminal, working with files, and writing your first automation. We cover file structure basics so nothing feels mysterious. You'll do a live build alongside the instructor and leave with working code.</p>
           <div class="space-y-3 mb-6">
@@ -394,18 +410,18 @@
             </div>
           </div>
           <div class="card p-4 inline-flex items-center gap-3">
-            <span style="color:var(--brand); font-size:1.2rem;">⏱</span>
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" style="flex-shrink:0;"><circle cx="12" cy="12" r="9.5" stroke="var(--brand)" stroke-width="1.5"/><path d="M12 7v5l3 3" stroke="var(--brand)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <span class="text-sm" style="color:var(--muted)">90-minute live session + code workbook + replay</span>
           </div>
         </div>
       </div>
 
       <!-- Week 3 -->
-      <div class="grid lg:grid-cols-2 gap-10 items-center mb-20">
+      <div class="grid lg:grid-cols-2 gap-10 items-center mb-20 week-hl">
         <div>
           <span class="week-badge mb-4 block">Week 03 — Deep Space</span>
           <h2 class="font-display text-2xl lg:text-3xl font-black text-white mb-4" style="font-family:'Plus Jakarta Sans',sans-serif;">
-            🛰️ GitHub, Skills &amp; Projects
+            GitHub, Skills &amp; Projects
           </h2>
           <p class="mb-5 leading-relaxed" style="color:var(--muted);">Deep space: the tools get more powerful and the builds get more serious. Week 3 is where your workflow becomes something portable. We cover how to pull skills, create projects, and understand GitHub well enough to never lose your work again.</p>
           <div class="space-y-3 mb-6">
@@ -435,7 +451,7 @@
             </div>
           </div>
           <div class="card p-4 inline-flex items-center gap-3">
-            <span style="color:var(--brand); font-size:1.2rem;">⏱</span>
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" style="flex-shrink:0;"><circle cx="12" cy="12" r="9.5" stroke="var(--brand)" stroke-width="1.5"/><path d="M12 7v5l3 3" stroke="var(--brand)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <span class="text-sm" style="color:var(--muted)">90-minute live session + project template + replay</span>
           </div>
         </div>
@@ -493,7 +509,7 @@
       </div>
 
       <!-- Week 4 -->
-      <div class="grid lg:grid-cols-2 gap-10 items-center">
+      <div class="grid lg:grid-cols-2 gap-10 items-center week-hl">
 
         <!-- W4 Visual (left) -->
         <div class="relative order-2 lg:order-1">
@@ -548,7 +564,7 @@
         <div class="order-1 lg:order-2">
           <span class="week-badge mb-4 block">Week 04 — The Landing</span>
           <h2 class="font-display text-2xl lg:text-3xl font-black text-white mb-4" style="font-family:'Plus Jakarta Sans',sans-serif;">
-            🌍 Build, Test &amp; Troubleshoot
+            Build, Test &amp; Troubleshoot
           </h2>
           <p class="mb-5 leading-relaxed" style="color:var(--muted);">The landing. Week 4 is where everything comes together. You build a complete project from start to finish, run it, test it, break it on purpose, and fix it. We cover the debugging mindset and the habits that separate reliable automation from a one-time experiment.</p>
           <div class="space-y-3 mb-6">
@@ -578,7 +594,7 @@
             </div>
           </div>
           <div class="card p-4 inline-flex items-center gap-3">
-            <span style="color:var(--brand); font-size:1.2rem;">⏱</span>
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" style="flex-shrink:0;"><circle cx="12" cy="12" r="9.5" stroke="var(--brand)" stroke-width="1.5"/><path d="M12 7v5l3 3" stroke="var(--brand)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <span class="text-sm" style="color:var(--muted)">90-minute live capstone session + replay</span>
           </div>
         </div>
@@ -698,7 +714,7 @@
               Session workbooks (all 4 weeks)
             </li>
           </ul>
-          <a href="mailto:info@onegiantleap.ai?subject=Enroll%3A%20Student%20Tier%20%24100" class="btn-ghost text-sm text-center w-full">Enroll — $100</a>
+          <a href="https://buy.stripe.com/dRm9AU7Jo87ibySe8o5c402" class="btn-ghost text-sm text-center w-full" target="_blank" rel="noopener">Enroll — $100</a>
         </div>
 
         <!-- Tier 2: Professional — FEATURED -->
@@ -727,7 +743,7 @@
               Direct instructor access via email
             </li>
           </ul>
-          <a href="mailto:info@onegiantleap.ai?subject=Enroll%3A%20Professional%20Tier%20%24250" class="btn-primary text-sm text-center w-full">Enroll — $250</a>
+          <a href="https://buy.stripe.com/dRm9AU7Jo87ibySe8o5c402" class="btn-primary text-sm text-center w-full" target="_blank" rel="noopener">Enroll — $250</a>
         </div>
 
         <!-- Tier 3: Executive -->
@@ -759,7 +775,7 @@
               Priority support throughout the cohort
             </li>
           </ul>
-          <a href="mailto:info@onegiantleap.ai?subject=Enroll%3A%20Executive%20Tier%20%24500" class="btn-ghost text-sm text-center w-full">Enroll — $500</a>
+          <a href="https://buy.stripe.com/8x2fZibZE4V69qKaWc5c400" class="btn-ghost text-sm text-center w-full" target="_blank" rel="noopener">Enroll — $500</a>
         </div>
 
         <!-- Tier 4: Enterprise -->
@@ -792,7 +808,7 @@
               Flexible scheduling around your calendar
             </li>
           </ul>
-          <a href="mailto:info@onegiantleap.ai?subject=Enterprise%20Workshop%20Inquiry" class="btn-ghost text-sm text-center w-full">Contact Us</a>
+          <a href="mailto:edgar@onegiantleap.ai?subject=Enterprise%20Workshop%20Inquiry" class="btn-ghost text-sm text-center w-full">Contact Us</a>
         </div>
 
       </div>

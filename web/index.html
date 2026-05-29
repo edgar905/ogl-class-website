@@ -234,6 +234,22 @@
     ::-webkit-scrollbar-track { background: var(--bg); }
     ::-webkit-scrollbar-thumb { background: rgba(46,163,242,0.3); border-radius: 3px; }
 
+    /* ── Section & card hover highlights ── */
+    .week-hl {
+      border-radius: 20px;
+      transition: background 0.3s ease;
+    }
+    .week-hl:hover {
+      background: rgba(46,163,242,0.03);
+    }
+    details.card {
+      transition: border-color 0.22s ease, box-shadow 0.22s ease;
+    }
+    details.card:hover {
+      border-color: rgba(46,163,242,0.22);
+      box-shadow: 0 4px 24px rgba(46,163,242,0.07);
+    }
+
     /* ── Animations ── */
     @keyframes float {
       0%, 100% { transform: translateY(0); }
@@ -367,7 +383,6 @@
         <div class="card card-glow p-6 relative overflow-hidden group hover:border-[rgba(46,163,242,0.3)] transition-colors duration-300">
           <div class="absolute top-0 right-0 w-24 h-24 rounded-bl-full" style="background:radial-gradient(ellipse at top right, rgba(46,163,242,0.08), transparent 70%);"></div>
           <span class="week-badge mb-4 block">Week 01</span>
-          <div class="text-3xl mb-3">🚀</div>
           <h3 class="font-display font-bold text-white text-lg mb-2" style="font-family:'Plus Jakarta Sans',sans-serif;">AI Fundamentals</h3>
           <p class="text-sm leading-relaxed" style="color:var(--muted);">The launchpad. Learn how AI and large language models actually work, what Claude does well, and how professionals are using these tools today.</p>
           <div class="mt-4 pt-4 border-t border-[rgba(255,255,255,0.05)] flex items-center gap-2">
@@ -380,7 +395,6 @@
         <div class="card card-glow p-6 relative overflow-hidden group hover:border-[rgba(46,163,242,0.3)] transition-colors duration-300">
           <div class="absolute top-0 right-0 w-24 h-24 rounded-bl-full" style="background:radial-gradient(ellipse at top right, rgba(46,163,242,0.08), transparent 70%);"></div>
           <span class="week-badge mb-4 block">Week 02</span>
-          <div class="text-3xl mb-3">⚡</div>
           <h3 class="font-display font-bold text-white text-lg mb-2" style="font-family:'Plus Jakarta Sans',sans-serif;">Claude + Code Basics</h3>
           <p class="text-sm leading-relaxed" style="color:var(--muted);">First orbit. Pair with Claude Code, learn file structure, and write your first real workflow. You bring the problem — Claude helps build it.</p>
           <div class="mt-4 pt-4 border-t border-[rgba(255,255,255,0.05)] flex items-center gap-2">
@@ -393,7 +407,6 @@
         <div class="card card-glow p-6 relative overflow-hidden group hover:border-[rgba(46,163,242,0.3)] transition-colors duration-300">
           <div class="absolute top-0 right-0 w-24 h-24 rounded-bl-full" style="background:radial-gradient(ellipse at top right, rgba(46,163,242,0.08), transparent 70%);"></div>
           <span class="week-badge mb-4 block">Week 03</span>
-          <div class="text-3xl mb-3">🛰️</div>
           <h3 class="font-display font-bold text-white text-lg mb-2" style="font-family:'Plus Jakarta Sans',sans-serif;">GitHub, Skills &amp; Projects</h3>
           <p class="text-sm leading-relaxed" style="color:var(--muted);">Deep space. Pull skills, create projects, and connect to the broader ecosystem. We cover GitHub basics so your work travels with you.</p>
           <div class="mt-4 pt-4 border-t border-[rgba(255,255,255,0.05)] flex items-center gap-2">
@@ -406,7 +419,6 @@
         <div class="card card-glow p-6 relative overflow-hidden group hover:border-[rgba(46,163,242,0.3)] transition-colors duration-300">
           <div class="absolute top-0 right-0 w-24 h-24 rounded-bl-full" style="background:radial-gradient(ellipse at top right, rgba(46,163,242,0.08), transparent 70%);"></div>
           <span class="week-badge mb-4 block">Week 04</span>
-          <div class="text-3xl mb-3">🌍</div>
           <h3 class="font-display font-bold text-white text-lg mb-2" style="font-family:'Plus Jakarta Sans',sans-serif;">Build, Test &amp; Ship</h3>
           <p class="text-sm leading-relaxed" style="color:var(--muted);">Landing. Build a complete project, test it, troubleshoot it, and learn the habits that separate reliable automation from one-off experiments.</p>
           <div class="mt-4 pt-4 border-t border-[rgba(255,255,255,0.05)] flex items-center gap-2">
@@ -514,7 +526,7 @@
 
       <div class="grid md:grid-cols-3 gap-6">
 
-        <div class="card card-glow p-6">
+        <div class="card card-glow p-6 transition-all duration-300 hover:border-[rgba(46,163,242,0.3)] hover:shadow-[0_12px_40px_rgba(46,163,242,0.12)]">
           <div class="stars text-lg mb-4">★★★★★</div>
           <p class="text-sm leading-relaxed mb-6" style="color:var(--muted);">"I've taken a dozen AI courses. This is the first one where I actually shipped something real before the class ended. Week 3 alone was worth the price."</p>
           <div class="flex items-center gap-3">
@@ -526,7 +538,7 @@
           </div>
         </div>
 
-        <div class="card card-glow card-featured p-6">
+        <div class="card card-glow card-featured p-6 transition-all duration-300 hover:shadow-[0_16px_50px_rgba(46,163,242,0.28)]">
           <div class="stars text-lg mb-4">★★★★★</div>
           <p class="text-sm leading-relaxed mb-6" style="color:var(--muted);">"The space-journey structure sounds gimmicky until you're in it. By week four I had a full Claude workflow running in my team's stack. Clear, practical, no fluff."</p>
           <div class="flex items-center gap-3">
@@ -538,7 +550,7 @@
           </div>
         </div>
 
-        <div class="card card-glow p-6">
+        <div class="card card-glow p-6 transition-all duration-300 hover:border-[rgba(46,163,242,0.3)] hover:shadow-[0_12px_40px_rgba(46,163,242,0.12)]">
           <div class="stars text-lg mb-4">★★★★★</div>
           <p class="text-sm leading-relaxed mb-6" style="color:var(--muted);">"Signed up skeptical — I thought I'd be too technical or not technical enough. The Executive tier with the consulting session made this exactly right for where I am."</p>
           <div class="flex items-center gap-3">
@@ -592,7 +604,7 @@
               Session workbooks (all 4 weeks)
             </li>
           </ul>
-          <a href="mailto:info@onegiantleap.ai?subject=Enroll%3A%20Student%20Tier%20%24100" class="btn-ghost text-sm text-center w-full">Enroll — $100</a>
+          <a href="https://buy.stripe.com/dRm9AU7Jo87ibySe8o5c402" class="btn-ghost text-sm text-center w-full" target="_blank" rel="noopener">Enroll — $100</a>
         </div>
 
         <!-- Tier 2: Professional — FEATURED -->
@@ -621,7 +633,7 @@
               Direct instructor access via email
             </li>
           </ul>
-          <a href="mailto:info@onegiantleap.ai?subject=Enroll%3A%20Professional%20Tier%20%24250" class="btn-primary text-sm text-center w-full">Enroll — $250</a>
+          <a href="https://buy.stripe.com/dRm9AU7Jo87ibySe8o5c402" class="btn-primary text-sm text-center w-full" target="_blank" rel="noopener">Enroll — $250</a>
         </div>
 
         <!-- Tier 3: Executive -->
@@ -653,7 +665,7 @@
               Priority support throughout the cohort
             </li>
           </ul>
-          <a href="mailto:info@onegiantleap.ai?subject=Enroll%3A%20Executive%20Tier%20%24500" class="btn-ghost text-sm text-center w-full">Enroll — $500</a>
+          <a href="https://buy.stripe.com/8x2fZibZE4V69qKaWc5c400" class="btn-ghost text-sm text-center w-full" target="_blank" rel="noopener">Enroll — $500</a>
         </div>
 
         <!-- Tier 4: Enterprise -->
@@ -686,7 +698,7 @@
               Flexible scheduling
             </li>
           </ul>
-          <a href="mailto:info@onegiantleap.ai?subject=Enterprise%20Workshop%20Inquiry" class="btn-ghost text-sm text-center w-full">Contact Us</a>
+          <a href="mailto:edgar@onegiantleap.ai?subject=Enterprise%20Workshop%20Inquiry" class="btn-ghost text-sm text-center w-full">Contact Us</a>
         </div>
 
       </div>
