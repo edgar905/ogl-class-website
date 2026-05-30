@@ -245,7 +245,7 @@
 <script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
 <script>
-  const FRAME_COUNT = 180;
+  const FRAME_COUNT = 200;
   const FRAME_SPEED = 2.0;
   const FIRST_LOAD = 12;
 
@@ -265,7 +265,6 @@
 
   let dpr = window.devicePixelRatio || 1;
   let currentFrame = 0;
-  let sampledBg = '#05070d';
   const frames = new Array(FRAME_COUNT).fill(null);
 
   function resizeCanvas() {
@@ -284,24 +283,14 @@
     return 'frames/frame_' + String(i + 1).padStart(4, '0') + '.jpg';
   }
 
-  function sampleBg(img) {
-    try {
-      const oc = document.createElement('canvas');
-      oc.width = 4; oc.height = 4;
-      oc.getContext('2d').drawImage(img, 0, 0, 4, 4);
-      const d = oc.getContext('2d').getImageData(0, 0, 1, 1).data;
-      sampledBg = `rgb(${d[0]},${d[1]},${d[2]})`;
-    } catch(e) {}
-  }
-
   function drawFrame(idx) {
     const img = frames[idx];
     if (!img) return;
     const cw = window.innerWidth, ch = window.innerHeight;
     const iw = img.naturalWidth, ih = img.naturalHeight;
-    const scale = Math.max(cw / iw, ch / ih) * 0.86;
+    const scale = Math.max(cw / iw, ch / ih) * 1.05;
     const dw = iw * scale, dh = ih * scale;
-    ctx.fillStyle = sampledBg;
+    ctx.fillStyle = '#05070d';
     ctx.fillRect(0, 0, cw, ch);
     ctx.drawImage(img, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
   }
@@ -317,7 +306,7 @@
     img.onload = () => {
       frames[i] = img;
       loaded++;
-      if (i % 20 === 0) sampleBg(img);
+      if (i === 0) drawFrame(0);
       if (cb) cb();
     };
     img.onerror = () => { loaded++; if (cb) cb(); };
@@ -444,6 +433,7 @@
       const inRange = p >= s.enter && (s.persist || p <= s.leave);
       if (inRange && !s.active) {
         s.active = true;
+        s.tl.pause(0);
         gsap.set(s.el, { opacity: 1 });
         s.el.classList.add('active');
         s.tl.play();
@@ -451,9 +441,8 @@
       } else if (!inRange && s.active && !s.persist) {
         s.active = false;
         s.el.classList.remove('active');
-        s.tl.reverse().then(() => {
-          if (!s.active) gsap.set(s.el, { opacity: 0 });
-        });
+        s.tl.pause(0);
+        gsap.set(s.el, { opacity: 0 });
       }
     });
   }
